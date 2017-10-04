@@ -1,34 +1,22 @@
-# 6.00 Problem Set 3
-#
-# Hangman game
-#
-
-# -----------------------------------
-# Helper code
-# You don't need to understand this helper code,
-# but you will have to know how to use the functions
-# (so be sure to read the docstrings!)
-
 import random
 import string
+from flask import flash
 
-WORDLIST_FILENAME = "./resources/words.txt"
-
-def loadWords():
+def loadWords(infle):
     """
     Returns a list of valid words. Words are strings of lowercase letters.
 
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    print "Loading word list from file..."
+    flash("Loading word list from file...")
     # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r', 0)
+    file = open(infile, 'r', 0)
     # line: string
     line = inFile.readline()
     # wordlist: list of strings
     wordlist = string.split(line)
-    print "  ", len(wordlist), "words loaded."
+    flash("  ", len(wordlist), "words loaded.")
     return wordlist
 
 def chooseWord(wordlist):
@@ -38,13 +26,6 @@ def chooseWord(wordlist):
     Returns a word from wordlist at random
     """
     return random.choice(wordlist)
-
-# end of helper code
-# -----------------------------------
-
-# Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
-wordlist = loadWords()
 
 def isWordGuessed(secretWord, lettersGuessed):
     '''
@@ -57,8 +38,6 @@ def isWordGuessed(secretWord, lettersGuessed):
         if not c in lettersGuessed:
             return False
     return True
-
-
 
 def getGuessedWord(secretWord, lettersGuessed):
     '''
@@ -115,42 +94,34 @@ def hangman(secretWord):
     lettersGuessed = []
     availableLetters = getAvailableLetters(lettersGuessed)
     guessedWord = getGuessedWord(secretWord,lettersGuessed)
-    print ("Welcome to the game Hangman!")
-    print "I am thinking of a word that is " + str(len(secretWord)) + " letters long"
-    print ("-"*11)
+    flash("Welcome to the game Hangman!")
+    flash("I am thinking of a word that is " + str(len(secretWord)) + " letters long")
 
     while guessesLeft > 1:
         guessesLeft = guessesAllowed - mistakesMade
-        print "You have " + str(guessesLeft) + " guesses left"
-        print "Available Letters: " + availableLetters
+        flash("You have " + str(guessesLeft) + " guesses left")
+        flash("Available Letters: " + availableLetters)
+        
+        #this will have to change in the web version
         guess = raw_input("Please guess a letter:")
+        
         guess = guess.lower()
         if (not guess in availableLetters) and (guess in lettersGuessed):
-            print "Oops! You've already guessed that letter: " + guessedWord
+            flash("Oops! You've already guessed that letter: " + guessedWord)
         else:
             lettersGuessed.append(guess)
             availableLetters = getAvailableLetters(lettersGuessed)
 
             if guess in secretWord:
                 guessedWord = getGuessedWord(secretWord,lettersGuessed)
-                print "Good guess: " + guessedWord
+                flash("Good guess: " + guessedWord)
             else:
-                print "Oops! That letter is not in my word: " + guessedWord
+                flash("Oops! That letter is not in my word: " + guessedWord)
                 mistakesMade += 1
 
-        print ("-"*11)
 
         if isWordGuessed(secretWord,lettersGuessed):
-            print "Congratulations, you won!"
+            flash("Congratulations, you won!")
             return None
 
-    print "Sorry, you ran out of guesses. The word was " + secretWord + '.'
-
-
-#-------------------------------------------------------------------
-# When you've completed your hangman function, uncomment these two lines
-# and run this file to test! (hint: you might want to pick your own
-# secretWord while you're testing)
-
-secretWord = chooseWord(wordlist).lower()
-hangman(secretWord)
+    flash("Sorry, you ran out of guesses. The word was " + secretWord + '.')
