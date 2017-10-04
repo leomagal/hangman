@@ -2,7 +2,7 @@ import random
 import string
 from flask import flash
 
-def loadWords(infle):
+def loadWords(infile):
     """
     Returns a list of valid words. Words are strings of lowercase letters.
 
@@ -13,7 +13,7 @@ def loadWords(infle):
     # inFile: file
     file = open(infile, 'r', 0)
     # line: string
-    line = inFile.readline()
+    line = file.readline()
     # wordlist: list of strings
     wordlist = string.split(line)
     flash("  ", len(wordlist), "words loaded.")
