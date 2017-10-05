@@ -68,7 +68,7 @@ def getAvailableLetters(lettersGuessed):
     return alstr
 
 
-def hangman(secretWord):
+def hang(secretWord):
     '''
     secretWord: string, the secret word to guess.
 
