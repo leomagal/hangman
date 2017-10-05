@@ -19,7 +19,11 @@ def initialize():
     wordlist = hangman.loadWords(WORDLIST_FILENAME)
     import pdb; pdb.set_trace()
     #Broken Pipe Error
-    return redirect(url_for('start_game', wordlist=wordlist))
+    #return redirect(url_for('start_game', wordlist=wordlist))
+    
+    #actually i don't need to render any template here for now
+    #only when I create a index.html welcome page
+    start_game(wordlist)
     
 @app.route('/start')
 def start_game(wordlist):
