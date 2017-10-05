@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    
+    <h1 align='center'>Hangman Game</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <textarea class=flashes>
+            {% message = messages[0] %}
+                {{ message }}            
+            </textarea>
+        {% endif %}
+    {% endwith %}
+</html>

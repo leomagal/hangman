@@ -10,13 +10,15 @@ def loadWords(infile):
     take a while to finish.
     """
     flash("Loading word list from file...")
-    # inFile: file
+    print("Loading word list from file...")
+    
     file = open(infile, 'r', 0)
-    # line: string
     line = file.readline()
-    # wordlist: list of strings
     wordlist = string.split(line)
-    flash("  ", len(wordlist), "words loaded.")
+
+    msg = "  " + str(len(wordlist)) + "words loaded."
+    flash(msg)
+    print(msg)
     return wordlist
 
 def chooseWord(wordlist):
@@ -95,28 +97,34 @@ def hang(secretWord):
     availableLetters = getAvailableLetters(lettersGuessed)
     guessedWord = getGuessedWord(secretWord,lettersGuessed)
     flash("Welcome to the game Hangman!")
-    flash("I am thinking of a word that is " + str(len(secretWord)) + " letters long")
+    msg = "I am thinking of a word that is " + str(len(secretWord)) + " letters long"
+    flash(msg)
 
     while guessesLeft > 1:
         guessesLeft = guessesAllowed - mistakesMade
-        flash("You have " + str(guessesLeft) + " guesses left")
-        flash("Available Letters: " + availableLetters)
+        msg = "You have " + str(guessesLeft) + " guesses left"
+        flash(msg)
+        msg = "Available Letters: " + availableLetters
+        flash(msg)
         
         #this will have to change in the web version
         guess = raw_input("Please guess a letter:")
         
         guess = guess.lower()
         if (not guess in availableLetters) and (guess in lettersGuessed):
-            flash("Oops! You've already guessed that letter: " + guessedWord)
+            msg = "Oops! You've already guessed that letter: " + guessedWord
+            flash(msg)
         else:
             lettersGuessed.append(guess)
             availableLetters = getAvailableLetters(lettersGuessed)
 
             if guess in secretWord:
                 guessedWord = getGuessedWord(secretWord,lettersGuessed)
-                flash("Good guess: " + guessedWord)
+                msg = "Good guess: " + guessedWord
+                flash(msg)
             else:
-                flash("Oops! That letter is not in my word: " + guessedWord)
+                msg = "Oops! That letter is not in my word: " + guessedWord
+                flash(msg)
                 mistakesMade += 1
 
 
